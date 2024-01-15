@@ -1,7 +1,8 @@
 import os, sys, csv
-from termcolor import colored
-import smtplib
 import random
+import smtplib
+from termcolor import colored
+from dotenv import load_dotenv
 from cryptography.fernet import Fernet
 
 os.system('cls')
@@ -57,11 +58,13 @@ def gen_rand_code():
 vercode = str(gen_rand_code())
 
 def send_mail(ma):
+    load_dotenv()
+    PASSWORD = os.getenv('PASSWORD')
     from_add = 'yourpassyourpass@gmail.com'
     obj = smtplib.SMTP('smtp.gmail.com', 587)
     obj.ehlo()
     obj.starttls()
-    obj.login(from_add, 'aeuc eyrl lapk xwbs')
+    obj.login(from_add, PASSWORD)
     obj.sendmail(from_addr=from_add, to_addrs=ma, msg=vercode)
     obj.quit()
 
@@ -69,8 +72,6 @@ def verify(c):
     return c == vercode
 
 path = 'C:/yourpass'
-
-
 
 print(colored('#'*28, 'cyan'))
 print(colored(' #'+' '*26+'#', 'cyan'))
